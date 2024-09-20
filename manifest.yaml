@@ -1,0 +1,24 @@
+---
+version: 1
+applications:
+- name: cf-spring-boot
+  memory: 1G
+  instances: 1
+  path: target/cf-spring-boot-1.0.0-SNAPSHOT.jar
+  random-route: true
+
+  # Enable liveness and readiness probes.
+  health-check-type: http
+  health-check-http-endpoint: /actuator/health/liveness
+  readiness-health-check-type: http
+  readiness-health-check-http-endpoint: /actuator/health/readiness
+
+  # Pick only the Java Buildpack to speed up app deployment.
+  buildpacks:
+  - java_buildpack_offline
+
+  env:
+    # Use Java 21.* to run the app.
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ }}'
+    # Enable CDS and AOT support in the Java Buildpack in order to optimize app startup.
+    JBP_CONFIG_SPRING_BOOT_EFFICIENCY: '{ aot_enabled: true, cds_enabled: true }'

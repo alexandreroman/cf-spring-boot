@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:if="${info.runningOnCloudFoundry}">Spring Boot on Cloud Foundry</title>
+  <title th:unless="${info.runningOnCloudFoundry}">Spring Boot</title>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body data-bs-theme="light">
+
+<nav class="navbar bg-dark sticky-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/}">
+      <img th:src="@{/images/spring-boot.png}" alt="Spring Boot" width="30" height="27"
+           class="d-inline-block align-text-top"> Spring Boot</a>
+    <span class="navbar-text p-0" th:if="${info.runningOnCloudFoundry}">
+            <span class="small">powered by</span>
+            <a href="https://www.cloudfoundry.org">
+                <img class="mt-2 m-1" th:src="@{/images/cf.png}" width="140" height="20"
+                     alt="Cloud Foundry"/></a>
+        </span>
+  </div>
+</nav>
+
+<div class="container pt-3">
+  <div class="row">
+    <div class="container-fluid">
+      <h1 class="display-5 fw-bold">🥳 Congratulations!</h1>
+      <p class="col-12 fs-4">
+        <span th:if="${info.runningOnCloudFoundry}">Your <strong>Spring Boot</strong> app now runs on Cloud Foundry.</span>
+        <span th:unless="${info.runningOnCloudFoundry}">Your <strong>Spring Boot</strong> app is up and running.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="row align-items-md-stretch">
+    <div class="col-lg-6 mt-lg-3 mb-3">
+      <div class="h-100 p-4 bg-dark rounded-3" data-bs-theme="dark">
+        <h2 class="text-white">⚡ Your application</h2>
+        <ul id="appInfo" class="m-0">
+          <li th:if="${info.groupId}"><span class="text-white-50">GroupId:</span>
+            <span class="text-warning font-monospace" th:text="${info.groupId}">groupId</span>
+          </li>
+          <li th:if="${info.artifactId}"><span class="text-white-50">ArtifactId:</span>
+            <span class="text-warning font-monospace" th:text="${info.artifactId}">artifactId</span>
+          </li>
+          <li><span class="text-white-50">Spring Boot Profiles:</span>
+            <span class="text-warning font-monospace" th:text="${info.springBootProfiles}">springBootProfiles</span>
+          </li>
+          <li><span class="text-white-50">Spring Boot Version:</span>
+            <span class="text-warning font-monospace" th:text="${info.springBootVersion}">springBootVersion</span>
+          </li>
+          <li><span class="text-white-50">Java Version:</span>
+            <span class="text-warning font-monospace" th:text="${info.javaVersion}">javaVersion</span>
+          </li>
+          <li><span class="text-white-50">AppCDS Enabled:</span>
+            <span class="text-warning font-monospace" th:text="${info.appCdsEnabled}">appCdsEnabled</span>
+          </li>
+          <li th:if="${info.appInstanceIndex}"><span class="text-white-50">Instance Index:</span>
+            <span class="text-warning font-monospace" th:text="${info.appInstanceIndex}">appInstanceIndex</span>
+          </li>
+          <li th:if="${info.appInstanceAddr}"><span class="text-white-50">Instance Address:</span>
+            <span class="text-warning font-monospace" th:text="${info.appInstanceAddr}">appInstanceAddr</span>
+          </li>
+          <li><span class="text-white-50">Startup Time:</span>
+            <span class="text-warning font-monospace" th:text="${@durations.toSeconds(info.startupTime.get())}">startupTime</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-6 mt-lg-3 mb-3">
+      <div class="h-100 p-4 bg-light border rounded-3">
+        <h2>⏭️ What's next?</h2>
+        <div th:unless="${info.runningOnCloudFoundry}">
+          <p>You are one command away to run your app on Cloud Foundry:</p>
+          <a class="btn btn-outline-secondary" target="_" role="button"
+             href="https://docs.cloudfoundry.org/devguide/deploy-apps/deploy-app.html">
+            Run cf push</a>
+        </div>
+        <div th:if="${info.runningOnCloudFoundry}">
+          <p>Check out VMware Tanzu Platform for Cloud Foundry:</p>
+          <a class="btn btn-outline-secondary" target="_" role="button"
+             href="https://tanzu.vmware.com/platform">
+            Read more</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a class="github-fork-ribbon right-bottom fixed" href="https://github.com/alexandreroman/cf-spring-boot"
+     data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+</footer>
+
+</body>
+</html>
