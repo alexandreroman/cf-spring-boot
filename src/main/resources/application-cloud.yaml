@@ -31,3 +31,17 @@ logging:
   structured:
     format:
       console: ecs
+
+spring:
+  web:
+    # Enable caching for static resources.
+    resources:
+      cache:
+        period: 3600
+      chain:
+        strategy:
+          content:
+            enabled: true
+            paths:
+            - /css/**
+            - /images/**
