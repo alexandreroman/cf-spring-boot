@@ -58,6 +58,15 @@ class AppInfoConfig {
         final var appInstanceIndex = env.getProperty("CF_INSTANCE_INDEX");
         final var appInstanceAddr = env.getProperty("CF_INSTANCE_IP");
 
+        final var redisHost = env.getProperty("spring.data.redis.host");
+        final var redisPort = env.getProperty("spring.data.redis.port");
+        final String dataSourceName;
+        if (redisHost != null && redisPort != null) {
+            dataSourceName = "redis://" + redisHost + ":" + redisPort;
+        } else {
+            dataSourceName = env.getProperty("spring.datasource.url");
+        }
+
         return new AppInfo(
                 runningOnCloudFoundry,
                 build != null ? build.getGroup() : null,
@@ -66,6 +75,7 @@ class AppInfoConfig {
                 profiles,
                 JavaVersion.getJavaVersion().toString(),
                 startupTimeSupplier,
+                dataSourceName,
                 appCdsEnabled,
                 appInstanceIndex,
                 appInstanceAddr

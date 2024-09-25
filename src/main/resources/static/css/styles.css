@@ -1,3 +1,8 @@
 .github-fork-ribbon:before {
   background-color: black;
 }
+
+li {
+  overflow: auto;
+  white-space: nowrap;
+}

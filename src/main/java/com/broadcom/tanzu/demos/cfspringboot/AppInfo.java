@@ -27,6 +27,7 @@ record AppInfo(
         String springBootProfiles,
         String javaVersion,
         Supplier<Duration> startupTime,
+        String dataSource,
         boolean appCdsEnabled,
         String appInstanceIndex,
         String appInstanceAddr

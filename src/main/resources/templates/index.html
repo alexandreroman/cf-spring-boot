@@ -60,6 +60,9 @@
           <li><span class="text-white-50">AppCDS Enabled:</span>
             <span class="text-warning font-monospace" th:text="${info.appCdsEnabled}">appCdsEnabled</span>
           </li>
+          <li th:if="${info.dataSource}"><span class="text-white-50">Data Source:</span>
+            <span class="text-warning font-monospace" th:text="${info.dataSource}">dataSource</span>
+          </li>
           <li th:if="${info.appInstanceIndex}"><span class="text-white-50">Instance Index:</span>
             <span class="text-warning font-monospace" th:text="${info.appInstanceIndex}">appInstanceIndex</span>
           </li>
