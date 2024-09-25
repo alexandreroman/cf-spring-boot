@@ -16,6 +16,8 @@
 
 package com.broadcom.tanzu.demos.cfspringboot;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +25,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 class IndexController {
     private final AppInfo appInfo;
+    private final Counter viewsCounter;
 
-    IndexController(AppInfo appInfo) {
+    IndexController(AppInfo appInfo, MeterRegistry meterRegistry) {
         this.appInfo = appInfo;
+        viewsCounter = Counter.builder("app.views")
+                .baseUnit("views")
+                .description("Page views")
+                .tag("page", "index")
+                .register(meterRegistry);
     }
 
     @GetMapping(value = "/")
     String index(Model model) {
+        // Increment page views counter.
+        viewsCounter.increment();
+
+        // Build view model for rendering.
         model.addAttribute("info", appInfo);
         return "index";
     }

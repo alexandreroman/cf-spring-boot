@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: cf-spring-boot
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  # Enable liveness and readiness probes
+  # (not enabled by default when running on Cloud Foundry).
+  endpoint:
+    health:
+      probes:
+        enabled: true

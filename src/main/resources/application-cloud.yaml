@@ -1,0 +1,33 @@
+# Make app metrics available under /actuator/prometheus.
+# Set up Cloud Foundry to pull metrics out of your app:
+# $ cf register-metrics-endpoint cf-spring-boot /actuator/prometheus --insecure
+
+management:
+  # Set up actuator endpoints.
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    process:
+      enabled: true
+
+  # Set common metrics tags.
+  observations:
+    key-values: &tags
+      application: ${spring.application.name}
+      service: ${spring.application.name}
+      source: ${spring.application.name}-${random.uuid}
+  metrics:
+    tags: *tags
+
+# Use JSON based format for structured logging when running on Cloud Foundry.
+# You may want to forward log entries to some ElasticSearch / Kibana instance for example.
+logging:
+  structured:
+    format:
+      console: ecs
