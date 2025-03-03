@@ -18,6 +18,8 @@ applications:
   - java_buildpack_offline
 
   env:
+    # Enable "cloud" profile.
+    SPRING_PROFILES_ACTIVE: cloud
     # Use Java 21.* to run the app.
     JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ }}'
     # Enable CDS and AOT support in the Java Buildpack in order to optimize app startup.
